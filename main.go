@@ -1,9 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"github.com/go-chi/chi/v5"
+	"net/http"
 )
 
 func main() {
-	fmt.Println("Hello bozo")
+	r := chi.NewRouter()
+	r.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("bozo"))
+		return
+	})
+	err := http.ListenAndServe(":8080", r)
+	if err != nil {
+		panic(err)
+	}
 }
